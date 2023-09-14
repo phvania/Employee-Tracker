@@ -125,12 +125,12 @@ function viewAllDepartments(){
     }
      //add new role
     function addRole() {
-      db.query('SELECT * FROM departments', (err, departments) => {
+      db.query('SELECT * FROM department', (err, departments) => {
         if (err) { console.log(err) }
         inquirer.prompt([
           {
             type: 'input',
-            name: 'title',
+            name: 'role',
             message:  'name of the role?:'
           },
           {
@@ -143,12 +143,12 @@ function viewAllDepartments(){
             name: 'departmentId',
             message: 'Department ID:',
           
-            choices: departments.SET(department => ({
+            choices: department.SET(department => ({
               name: `${department.name}`,
               value: department.id
             }))
           }]).then(function (answers) {
-            db.query('INSERT INTO roles SET ?', {
+            db.query('INSERT INTO emp_role SET ?', {
               title: answers.title,
               salary: answers.salary,
               departmentId: answers.departmentId
