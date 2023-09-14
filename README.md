@@ -11,13 +11,15 @@
   ## Demo:
 
 
-  
+  https://github.com/phvania/Employee-Tracker
   
 
   ##screenshot:
-  ![Alt text](image.png)
-  ![Alt text](image-1.png)
-  ![Alt text](image-2.png)
+   ![Alt text](IMG-0601.jpg)
+   ![Alt text](IMG-0602.jpg) 
+   ![Alt text](IMG-0603.jpg)
+  
+  
 
 
 

@@ -50,13 +50,13 @@ function mainquestions() {
          
           addDepartment()
           break;
-        case  "view All Roles":
+        case  "View All Roles":
           viewAllRoles()
           break;
           case "Add Role":
             addRole()
             break;
-          case "view All Employees":
+          case "View All Employees":
             viewAllEmployees() 
             break;
           case "Add  Employee":
@@ -71,7 +71,7 @@ function mainquestions() {
           
           default:
             //console.log("no case matched")
-            db.exit();
+            db.exit;
             break;
       }
      
@@ -85,6 +85,7 @@ function viewAllDepartments(){
   db.query('SELECT * FROM department',  function (err, res) {
     if (err) throw err;
   console.log("View all departments")
+  console.table(res)
   mainquestions()
   })
 }
@@ -94,12 +95,21 @@ function viewAllDepartments(){
           .prompt({
             name: 'name',
             type: 'input',
-            message: 'Enter name of new department:',
-          }) .then(({ name }) => {
-            const query = 'insert into department  values (?)';
+            message: 'Enter name of  the new department:',
+          }).then(({ name }) => {
+            const query = 'INSERT INTO  department (dpt_name)  VALUES (?)';
             db. query( query, name,  (err, res) => {
               if (err) throw err;
               mainquestions();
+              //validate: departmentInput => {
+                //if (departmentInput) {
+                 // return true;
+                //} else {
+                 // console.log('please Add a Department');
+                 // return false;
+                //}
+              //}
+              //mainquestions();
             } )
           })
   }
@@ -109,6 +119,7 @@ function viewAllDepartments(){
       db.query('SELECT * FROM  emp_role',  function (err, res) {
         if (err) throw err;
       console.log("View all Roles")
+      console.table(res)
       mainquestions()
       })
     }
@@ -120,7 +131,7 @@ function viewAllDepartments(){
           {
             type: 'input',
             name: 'title',
-            message: 'what is the name of your role?:'
+            message:  'name of the role?:'
           },
           {
             type: 'number',
@@ -132,7 +143,7 @@ function viewAllDepartments(){
             name: 'departmentId',
             message: 'Department ID:',
           
-            choices: departments.map(department => ({
+            choices: departments.SET(department => ({
               name: `${department.name}`,
               value: department.id
             }))
@@ -153,13 +164,14 @@ function viewAllDepartments(){
     function viewAllEmployees(){
       db.query('SELECT * FROM  employee',  function (err, res) {
         if (err) throw err;
-      console.log("View all Employees")
+      console.log("View All Employees")
+      console.table(res)
       mainquestions()
       })
     }
     //add new employee
     function  addEmployee()  {
-      db.query('SELECT * FROM roles', (err, roles) => {
+      db.query('SELECT * FROM  employee, role', (err, roles) => {
         if (err) { console.log(err) }
         inquirer.prompt([
           {
@@ -194,7 +206,7 @@ function viewAllDepartments(){
     }, function (err, res) {
       if (err) throw err;
       console.table(res)
-      start()
+      mainquestions()
     })
   })
 })}
@@ -211,7 +223,7 @@ function updateEmployeeRole() {
           type: "list",
           name: "selectEmployee",
           message: "Select the employee who's role will be updated",
-          choices: employees.map(employee => ({
+          choices: (employee => ({
             name: `${employee.firstName} ${employee.lastName} - Role ID:${employee.roleId}`,
             value: employee.id
           }))
@@ -220,7 +232,7 @@ function updateEmployeeRole() {
           type: 'list',
           name: 'updatedRole',
           message: 'New Role ID:',
-          choices: roles.map(role => ({
+          choices: (role => ({
             name: `${role.title}`,
             value: role.id
           })) }
@@ -262,4 +274,4 @@ function removeEmployee() {
   
 
 
-//module.exports = db;
+module.exports = db;
