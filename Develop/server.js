@@ -143,8 +143,8 @@ function viewAllDepartments(){
             name: 'departmentId',
             message: 'Department ID:',
           
-            choices: department.SET(department => ({
-              name: `${department.name}`,
+            choices: departments.map(department => ({
+              name: `${department.dpt_name}`,
               value: department.id
             }))
           }]).then(function (answers) {
