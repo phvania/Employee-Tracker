@@ -154,6 +154,7 @@ function viewAllDepartments(){
               departmentId: answers.departmentId
             }, function (err, res) {
               if (err) throw err;
+              console.log(`Added ${answers.role} to the database.`)
               console.table(res)
               mainquestions()
             })
