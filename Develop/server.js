@@ -151,9 +151,9 @@ function viewAllDepartments(){
             db.query('INSERT INTO emp_role SET ?', {
               title: answers.title,
               salary: answers.salary,
-              departmentId: answers.departmentId
+              department_id: answers.department_id,
             }, function (err, res) {
-              if (err) throw err;
+              //if (err) throw err;
               console.log(`Added ${answers.role} to the database.`)
               console.table(res)
               mainquestions()
