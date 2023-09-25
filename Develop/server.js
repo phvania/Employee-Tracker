@@ -59,7 +59,7 @@ function mainquestions() {
           case "View All Employees":
             viewAllEmployees() 
             break;
-          case "Add  Employee":
+          case "Add Employee":
             addEmployee() 
             break;
           case "Update Employee Role":
@@ -116,7 +116,7 @@ function viewAllDepartments(){
      
     //view function
      function viewAllRoles(){
-      db.query('SELECT * FROM  emp_role',  function (err, res) {
+      db.query('SELECT * FROM  emp_role left join department on emp_role.department_id = department.id ',  function (err, res) {
         if (err) throw err;
       console.log("View all Roles")
       console.table(res)
@@ -148,14 +148,15 @@ function viewAllDepartments(){
               value: department.id
             }))
           }]).then(function (answers) {
-            db.query('INSERT INTO emp_role SET ?', {
-              title: answers.title,
-              salary: answers.salary,
-              department_id: answers.department_id,
-            }, function (err, res) {
+            console.log(answers)
+            db.query('INSERT INTO emp_role SET ?, ?, ?', [{title: answers.role},
+              {salary: answers.salary},
+              {department_id: answers.departmentId}
+            ], function (err, res) {
               //if (err) throw err;
               console.log(`Added ${answers.role} to the database.`)
-              console.table(res)
+              //console.table(res)
+              viewAllRoles()
               mainquestions()
             })
           })
@@ -163,7 +164,7 @@ function viewAllDepartments(){
       }
 //view employees function
     function viewAllEmployees(){
-      db.query('SELECT * FROM  employee',  function (err, res) {
+      db.query('SELECT *  FROM  employee left join emp_role on employee.role_id = emp_role.id left join department on emp_role.department_id = department.id  ',  function (err, res) {
         if (err) throw err;
       console.log("View All Employees")
       console.table(res)
@@ -172,8 +173,9 @@ function viewAllDepartments(){
     }
     //add new employee
     function  addEmployee()  {
-      db.query('SELECT * FROM  employee, role', (err, roles) => {
+      db.query('SELECT * FROM  emp_role', (err, roles) => {
         if (err) { console.log(err) }
+        console.log(roles)
         inquirer.prompt([
           {
             type: 'input',
@@ -198,15 +200,15 @@ function viewAllDepartments(){
       ]
       
   ).then(function (answers) {
-    db.query('INSERT INTO employees SET ?', {
-      firstName: answers.firstName,
-      lastName: answers.lastName,
-      roleId: answers.roleId,
+    console.log(answers)
+    db.query('INSERT INTO employee SET ?,?,?,?',[ {first_name: answers.firstName},
+      {last_name: answers.lastName},
+      {role_id: answers.roleId},
       //managerId null for now
-      managerId: null
-    }, function (err, res) {
+      {manager_id: null}],
+     function (err, res) {
       if (err) throw err;
-      console.table(res)
+    viewAllEmployees()
       mainquestions()
     })
   })
@@ -215,17 +217,19 @@ function viewAllDepartments(){
 //update employee role function
 function updateEmployeeRole() {
 
-  db.query('SELECT * FROM employees', (err, employees) => {
+  db.query('SELECT * FROM employee', (err, employee) => {
     if (err) { console.log(err) }
-    db.query(`SELECT * FROM emp_roles`, (err, roles) => {
+    console.log(employee)
+    db.query(`SELECT * FROM emp_role`, (err, role) => {
       if (err) { console.log(err) }
+      console.log(role)
       inquirer.prompt([
         {
           type: "list",
           name: "selectEmployee",
           message: "Select the employee who's role will be updated",
           choices: (employee => ({
-            name: `${employee.firstName} ${employee.lastName} - Role ID:${employee.roleId}`,
+            name: `${employee.firstName} ${employee.lastName} - RoleID:${employee.roleId}`,
             value: employee.id
           }))
         },
@@ -238,7 +242,7 @@ function updateEmployeeRole() {
             value: role.id
           })) }
         ]).then(function (answers) {
-          db.query('UPDATE employees SET ? WHERE ?', [{ roleId: answers.updatedRole }, { id: answers.selectEmployee }], function (err, res) {
+          db.query('UPDATE employee SET ? WHERE ?', [{ roleId: answers.updatedRole }, { id: answers.selectEmployee }], function (err, res) {
             if (err) throw err
             console.log('Employee role updated!')
             mainquestions()

@@ -9,7 +9,7 @@
   - [Testing](#Testing)
 
   ## Demo:
-
+https://drive.google.com/file/d/1E8gZedIQyy4YO0bAX762KnnN5LZKR6xL/view
 
   https://github.com/phvania/Employee-Tracker
   
@@ -45,7 +45,7 @@ your schema should contain the following three tables:
 
     * `salary`: `DECIMAL` to hold role salary
 
-    * `department_id`: `INT` to hold reference to department role belongs to
+    * `department_id`: `VARCHAR(30)` to hold reference to department role belongs to
 
 * `employee`
 
