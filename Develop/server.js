@@ -228,8 +228,8 @@ function updateEmployeeRole() {
           type: "list",
           name: "selectEmployee",
           message: "Select the employee who's role will be updated",
-          choices: (employee => ({
-            name: `${employee.firstName} ${employee.lastName} - RoleID:${employee.roleId}`,
+          choices: employee.map(employee => ({
+            name: `${employee.first_name} ${employee.last_name} - RoleID:${employee.role_id}`,
             value: employee.id
           }))
         },
@@ -237,12 +237,12 @@ function updateEmployeeRole() {
           type: 'list',
           name: 'updatedRole',
           message: 'New Role ID:',
-          choices: (role => ({
+          choices: role.map(role => ({
             name: `${role.title}`,
             value: role.id
           })) }
         ]).then(function (answers) {
-          db.query('UPDATE employee SET ? WHERE ?', [{ roleId: answers.updatedRole }, { id: answers.selectEmployee }], function (err, res) {
+          db.query('UPDATE employee SET ? WHERE ?', [{ role_id: answers.updatedRole }, { id: answers.selectEmployee }], function (err, res) {
             if (err) throw err
             console.log('Employee role updated!')
             mainquestions()
@@ -254,20 +254,20 @@ function updateEmployeeRole() {
 
 //remove employee
 function removeEmployee() {
-  db.query('SELECT * FROM employees', (err, employees) => {
+  db.query('SELECT * FROM employee', (err, employee) => {
     if (err) { console.log(err) }
     inquirer.prompt([
       {
         type: "list",
         name: "removeEmp",
         message: "Select the employee which will be removed",
-        choices: employees.map(employee => ({
-          name: `${employee.firstName} ${employee.lastName}`,
+        choices: employee.map (employee => ({
+          name: `${employee.first_name} ${employee.last_name}`,
           value: employee.id
         }))
       }
     ]).then(function (answer) {
-      db.query(`DELETE FROM employees WHERE id = ${answer.removeEmp}`
+      db.query(`DELETE FROM employee WHERE id = ${answer.removeEmp}`
         , function (err, res) {
           if (err) throw err
           console.log('Employee removed!')

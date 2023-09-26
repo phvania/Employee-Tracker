@@ -9,15 +9,22 @@
   - [Testing](#Testing)
 
   ## Demo:
-https://drive.google.com/file/d/1E8gZedIQyy4YO0bAX762KnnN5LZKR6xL/view
+
+https://drive.google.com/file/d/1CIP0VZoAy9ka5ZNfjpKXsCudWwRXEIxe/view
 
   https://github.com/phvania/Employee-Tracker
   
 
   ##screenshot:
-   ![Alt text](IMG-0601.jpg)
-   ![Alt text](IMG-0602.jpg) 
-   ![Alt text](IMG-0603.jpg)
+  ![Alt text](IMG_0667.jpg)
+  ![Alt text](IMG_0668.jpg)
+  ![Alt text](IMG_0669.jpg) 
+  ![Alt text](IMG_0670.jpg) 
+  ![Alt text](IMG_0664.jpg) 
+  ![Alt text](IMG_0665.jpg) 
+  ![Alt text](IMG_0666.jpg)
+   
+  
   
   
 
